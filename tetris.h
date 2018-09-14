@@ -1,6 +1,8 @@
 #ifndef TETRIS_H
 # define TETRIS_H
 
+#include "threads.h"
+
 struct tetris;
 
 void tetris_cleanup_io();

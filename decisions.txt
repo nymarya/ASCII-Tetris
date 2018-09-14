@@ -1,0 +1,3 @@
+botao => rotacionar
+potenciometro => ir para esquerda ou direita
+sensor => aumentar velocidade

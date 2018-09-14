@@ -5,28 +5,8 @@
 #include <signal.h>
 #include <time.h>
 #include <fcntl.h>
-
-struct tetris_level {
-    int score;
-    int nsec;
-};
-
-struct tetris {
-    char **game;
-    int w;
-    int h;
-    int level;
-    int gameover;
-    int score;
-    struct tetris_block {
-        char data[5][5];
-        int w;
-        int h;
-    } current;
-    int x;
-    int y;
-};
-
+#include "common.h"
+#include "threads.h" 
 struct tetris_block blocks[] =
 {
     {{"##", 
@@ -276,6 +256,9 @@ tetris_run(int w, int h) {
 
     tm.tv_sec=0;
     tm.tv_nsec=1000000;
+    pthread_t thread_id; 
+    pthread_create(&thread_id, NULL, thread_button, &t); 
+    pthread_join(thread_id, NULL); 
 
     tetris_new_block(&t);
     while (!t.gameover) {
@@ -302,9 +285,6 @@ tetris_run(int w, int h) {
                     break;
                 case 's':
                     tetris_gravity(&t);
-                    break;
-                case ' ':
-                    tetris_rotate(&t);
                     break;
             }
         }
