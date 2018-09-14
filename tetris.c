@@ -170,6 +170,7 @@ tetris_print_block(struct tetris *t) {
 
 void
 tetris_rotate(struct tetris *t) {
+    printf("a");
     struct tetris_block b=t->current;
     struct tetris_block s=b;
     int x,y;
@@ -257,8 +258,9 @@ tetris_run(int w, int h) {
     tm.tv_sec=0;
     tm.tv_nsec=1000000;
     pthread_t thread_id; 
-    pthread_create(&thread_id, NULL, thread_button, &t); 
-    pthread_join(thread_id, NULL); 
+    pthread_create(&thread_id, NULL, thread_button, &t);
+    pthread_create(&thread_id, NULL, thread_ldr, &t);
+    pthread_create(&thread_id, NULL, thread_potence, &t);
 
     tetris_new_block(&t);
     while (!t.gameover) {
@@ -271,6 +273,7 @@ tetris_run(int w, int h) {
             tetris_gravity(&t);
             tetris_check_lines(&t);
         }
+        /**
         while ((cmd=getchar())>0) {
             switch (cmd) {
                 case 'q':
@@ -287,7 +290,7 @@ tetris_run(int w, int h) {
                     tetris_gravity(&t);
                     break;
             }
-        }
+        }**/
         tm.tv_nsec=tetris_level(&t);
     }
 

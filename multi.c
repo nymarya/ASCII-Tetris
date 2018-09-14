@@ -7,8 +7,12 @@
 // when its name is specified in pthread_create() 
 void *myThreadFun(void *vargp) 
 { 
-    sleep(1); 
+    int i ;
+    for(i = 0 ; i < 10; i++){
+        sleep(1);
     printf("Printing GeeksQuiz from Thread \n"); 
+    }
+    
     return NULL; 
 } 
    
