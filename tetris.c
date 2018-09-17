@@ -271,24 +271,6 @@ tetris_run(int w, int h) {
             tetris_gravity(&t);
             tetris_check_lines(&t);
         }
-        /**
-        while ((cmd=getchar())>0) {
-            switch (cmd) {
-                case 'q':
-                    t.x--;
-                    if (tetris_hittest(&t))
-                        t.x++;
-                    break;
-                case 'd':
-                    t.x++;
-                    if (tetris_hittest(&t))
-                        t.x--;
-                    break;
-                case 's':
-                    tetris_gravity(&t);
-                    break;
-            }
-        }**/
         tm.tv_nsec=tetris_level(&t);
     }
 
