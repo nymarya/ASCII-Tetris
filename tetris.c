@@ -257,10 +257,8 @@ tetris_run(int w, int h) {
 
     tm.tv_sec=0;
     tm.tv_nsec=1000000;
-    pthread_t thread_id; 
-    pthread_create(&thread_id, NULL, thread_button, &t);
-    pthread_create(&thread_id, NULL, thread_ldr, &t);
-    pthread_create(&thread_id, NULL, thread_potence, &t);
+    
+    initThreads(&t);
 
     tetris_new_block(&t);
     while (!t.gameover) {

@@ -5,9 +5,12 @@
 #include <stdlib.h> 
 #include <pthread.h> 
 #include "common.h"
+#include <sched.h>
 
-void *thread_button(void *arg);
-void *thread_ldr(void *arg);
-void *thread_potence(void *arg);
+
+void initThreads(struct tetris *t);
+void *threadButton(void *arg);
+void *threadLdr(void *arg);
+void *threadPotenciometer(void *arg);
 
 #endif
