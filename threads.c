@@ -78,6 +78,7 @@ void * thread(void *arg){
     int addrlen = sizeof(address); 
     char buffer[1024] = {0}; 
     char *hello = "Hello from server"; 
+
        
     // Creating socket file descriptor 
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) 
@@ -118,10 +119,17 @@ void * thread(void *arg){
             exit(EXIT_FAILURE); 
         } 
 
+        printf("aa");
+
         while (1){
             valread = read( new_socket , buffer, 1024); 
             if( valread == -1){
                 //trata msg para controlar jogo
+                struct tetris *t = (struct tetris *) arg;
+                char * rotate = "rotate";
+                if( strcmp(buffer,rotate) == 0){
+                    tetris_rotate(t);
+                }
                 break;
             } else if (valread == 0){
                 exit(EXIT_SUCCESS);
