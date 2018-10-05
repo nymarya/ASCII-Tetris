@@ -5,12 +5,15 @@
  */
 void *thread_button(void *arg){
     char cmd;
-    struct tetris *t = (struct tetris *) arg;
+    char *rotate = "rotate"; 
+
+    int *sock = (int *) arg;
     for(;;){
         while ((cmd=getchar())>0) {
             switch (cmd) {
                 case ' ':
-                    tetris_rotate(t);
+                    send(sock , rotate , strlen(rotate) , 0 );
+                    //tetris_rotate(t);
                     break;
             }
         }
@@ -30,7 +33,7 @@ void *thread_ldr(void *arg){
         while ((cmd=getchar())>0) {
             switch (cmd) {
                 case 's':
-                    tetris_gravity(t);
+                    //tetris_gravity(t);
                     break;
             }
         }
@@ -46,19 +49,19 @@ void *thread_ldr(void *arg){
  */
 void *thread_potence(void *arg){
     char cmd;
-    struct tetris *t = (struct tetris *) arg;
+    //struct tetris *t = (struct tetris *) arg;
     for(;;){
         while ((cmd=getchar())>0) {
             switch (cmd) {
                 case 'q':
-                    t->x--;
-                    if (tetris_hittest(t))
-                        t->x++;
+                    //t->x--;
+                    /*if (tetris_hittest(t))
+                        t->x++;*/
                     break;
                 case 'd':
-                    t->x++;
-                    if (tetris_hittest(t))
-                        t->x--;
+                    //t->x++;
+                    /*if (tetris_hittest(t))
+                        t->x--;*/
                     break;
             }
         }
