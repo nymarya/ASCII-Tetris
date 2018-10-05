@@ -9,6 +9,5 @@
 void *thread_button(void *arg);
 void *thread_ldr(void *arg);
 void *thread_potence(void *arg);
-void * thread(void *arg);
 
 #endif
