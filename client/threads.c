@@ -5,7 +5,10 @@
  */
 void *thread_button(void *arg){
     char cmd;
-    char *rotate = "rotate"; 
+    char *rotate = "rotate__"; 
+    int valread;
+    char buffer[1024] = {0}; 
+
 
     int *sock = (int *) arg;
     for(;;){
@@ -13,6 +16,8 @@ void *thread_button(void *arg){
             switch (cmd) {
                 case ' ':
                     send(sock , rotate , strlen(rotate) , 0 );
+                    valread = read( sock , buffer, 1024);
+                    printf("Rotate\n"); 
                     //tetris_rotate(t);
                     break;
             }
@@ -28,11 +33,19 @@ void *thread_button(void *arg){
  */
 void *thread_ldr(void *arg){
     char cmd;
-    struct tetris *t = (struct tetris *) arg;
+    char *gravity = "gravity_"; 
+    int valread;
+    char buffer[1024] = {0}; 
+
+    int *sock = (int *) arg;
+    //struct tetris *t = (struct tetris *) arg;
     for(;;){
         while ((cmd=getchar())>0) {
             switch (cmd) {
                 case 's':
+                    send(sock , gravity, strlen(gravity) , 0 );
+                    valread = read( sock , buffer, 1024);
+                    printf("Gravity\n"); 
                     //tetris_gravity(t);
                     break;
             }
