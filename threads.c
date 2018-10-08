@@ -125,9 +125,10 @@ void * thread(void *arg){
 
         while (1){
             valread = read( new_socket , buffer, 1024); 
-            //printf("v %i\n",valread );
+            printf("v %i\n",valread );
             if( valread != 0){
                 printf("b %s\n",buffer );
+                send(new_socket,buffer,strlen(buffer),0);
                 //trata msg para controlar jogo
                 struct tetris *t = (struct tetris *) arg;
                 char * rotate = "rotate__";
