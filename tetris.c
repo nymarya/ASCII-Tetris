@@ -170,7 +170,6 @@ tetris_print_block(struct tetris *t) {
 
 void
 tetris_rotate(struct tetris *t) {
-    printf("a");
     struct tetris_block b=t->current;
     struct tetris_block s=b;
     int x,y;
@@ -258,66 +257,11 @@ tetris_run(int w, int h) {
     tm.tv_sec=0;
     tm.tv_nsec=1000000;
     pthread_t thread_id; 
-    pthread_create(&thread_id, NULL, thread_button, &t);
-    pthread_create(&thread_id, NULL, thread_ldr, &t);
-    pthread_create(&thread_id, NULL, thread_potence, &t);
-
-    int server_fd, new_socket, valread; 
-    struct sockaddr_in address; 
-    int opt = 1; 
-    int addrlen = sizeof(address); 
-    char buffer[1024] = {0}; 
-    char *hello = "Hello from server"; 
-       
-    // Creating socket file descriptor 
-    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) 
-    { 
-        perror("socket failed"); 
-        exit(EXIT_FAILURE); 
-    } 
-       
-    // Forcefully attaching socket to the port 8080 
-    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, 
-                                                  &opt, sizeof(opt))) 
-    { 
-        perror("setsockopt"); 
-        exit(EXIT_FAILURE); 
-    } 
-    address.sin_family = AF_INET; 
-    address.sin_addr.s_addr = INADDR_ANY; 
-    address.sin_port = htons( PORT ); 
-       
-    // Forcefully attaching socket to the port 8080 
-    if (bind(server_fd, (struct sockaddr *)&address,  
-                                 sizeof(address))<0) 
-    { 
-        perror("bind failed"); 
-        exit(EXIT_FAILURE); 
-    } 
-    if (listen(server_fd, 3) < 0) 
-    { 
-        perror("listen"); 
-        exit(EXIT_FAILURE); 
-    } 
-
-    while( 1 ){
-        if ((new_socket = accept(server_fd, (struct sockaddr *)&address,  
-                       (socklen_t*)&addrlen))<0) 
-        { 
-            perror("accept"); 
-            exit(EXIT_FAILURE); 
-        } 
-
-        while (1){
-            valread = read( new_socket , buffer, 1024); 
-            if( valread == -1){
-                break;
-            } else if (valread == 0){
-                exit(EXIT_SUCCESS);
-            }
-            printf("%s\n",buffer );
-        }
-    }
+    //pthread_create(&thread_id, NULL, thread_button, &t);
+    //pthread_create(&thread_id, NULL, thread_ldr, &t);
+    //pthread_create(&thread_id, NULL, thread_potence, &t);
+    pthread_create(&thread_id, NULL, thread, &t);
+    //pthread_join(thread_id, NULL);
     
 
     tetris_new_block(&t);
@@ -325,34 +269,16 @@ tetris_run(int w, int h) {
         nanosleep(&tm, NULL);
         count++;
         if (count%50 == 0) {
-            tetris_print(&t);
+           tetris_print(&t);
         }
         if (count%350 == 0) {
             tetris_gravity(&t);
             tetris_check_lines(&t);
         }
-        /**
-        while ((cmd=getchar())>0) {
-            switch (cmd) {
-                case 'q':
-                    t.x--;
-                    if (tetris_hittest(&t))
-                        t.x++;
-                    break;
-                case 'd':
-                    t.x++;
-                    if (tetris_hittest(&t))
-                        t.x--;
-                    break;
-                case 's':
-                    tetris_gravity(&t);
-                    break;
-            }
-        }**/
         tm.tv_nsec=tetris_level(&t);
     }
 
-    tetris_print(&t);
+    //tetris_print(&t);
     printf("*** GAME OVER ***\n");
 
     tetris_clean(&t);
