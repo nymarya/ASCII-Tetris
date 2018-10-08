@@ -261,7 +261,7 @@ tetris_run(int w, int h) {
     //pthread_create(&thread_id, NULL, thread_ldr, &t);
     //pthread_create(&thread_id, NULL, thread_potence, &t);
     pthread_create(&thread_id, NULL, thread, &t);
-    pthread_join(thread_id, NULL);
+    //pthread_join(thread_id, NULL);
     
 
     tetris_new_block(&t);
@@ -269,7 +269,7 @@ tetris_run(int w, int h) {
         nanosleep(&tm, NULL);
         count++;
         if (count%50 == 0) {
-           // tetris_print(&t);
+           tetris_print(&t);
         }
         if (count%350 == 0) {
             tetris_gravity(&t);

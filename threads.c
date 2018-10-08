@@ -119,22 +119,43 @@ void * thread(void *arg){
             exit(EXIT_FAILURE); 
         } 
 
-        printf("aa");
+        send(new_socket , hello , strlen(hello) , 0 ); 
+
+        //printf("aa");
 
         while (1){
             valread = read( new_socket , buffer, 1024); 
-            if( valread == -1){
+            //printf("v %i\n",valread );
+            if( valread != 0){
+                printf("b %s\n",buffer );
                 //trata msg para controlar jogo
                 struct tetris *t = (struct tetris *) arg;
-                char * rotate = "rotate";
+                char * rotate = "rotate__";
+                char * gravity = "gravity_";
+                char * left = "go_left_";
+                char * right = "go_right";
                 if( strcmp(buffer,rotate) == 0){
                     tetris_rotate(t);
+                } else if( strcmp(buffer,left) == 0){
+                    t->x--;
+                    if (tetris_hittest(t))
+                        t->x++;
+                } else if( strcmp(buffer,gravity) == 0){
+                    tetris_gravity(t);
+                } else if( strcmp(buffer, right) == 0){
+                    t->x--;
+                    if (tetris_hittest(t))
+                        t->x--;
                 }
                 break;
             } else if (valread == 0){
-                exit(EXIT_SUCCESS);
+                pthread_exit(NULL);
+            } else {
+                printf("erro");
             }
-            printf("%s\n",buffer );
+            
         }
     }
+
+    pthread_exit(NULL);
 }
