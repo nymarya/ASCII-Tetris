@@ -269,7 +269,7 @@ tetris_run(int w, int h) {
         nanosleep(&tm, NULL);
         count++;
         if (count%50 == 0) {
-           //tetris_print(&t);
+           tetris_print(&t);
         }
         if (count%350 == 0) {
             tetris_gravity(&t);
